@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { Box, Flex, Accordion, Typography } from '@strapi/design-system';
 import { useIntl } from 'react-intl';
 
