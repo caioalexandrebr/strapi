@@ -1,10 +1,19 @@
 import * as React from 'react';
 
-import { Accordion, Box, Flex, FlexComponent, Typography } from '@strapi/design-system';
+import {
+  Accordion,
+  Box,
+  Button,
+  Flex,
+  FlexComponent,
+  Modal,
+  Typography,
+} from '@strapi/design-system';
 import { useIntl } from 'react-intl';
 import { styled } from 'styled-components';
+import * as Icons from '@strapi/icons';
 
-import { ComponentIcon } from '../../../../../components/ComponentIcon';
+import { COMPONENT_ICONS, ComponentIcon } from '../../../../../components/ComponentIcon';
 import { RESPONSIVE_CONTAINER_BREAKPOINTS } from '../../FormLayout';
 
 interface ComponentCategoryProps {
@@ -28,6 +37,8 @@ const ComponentCategory = ({
 }: ComponentCategoryProps) => {
   const { formatMessage } = useIntl();
 
+  const [isOpen, setIsOpen] = React.useState<string | null>(null);
+
   return (
     <Accordion.Item value={category}>
       <Accordion.Header variant={variant}>
@@ -37,28 +48,84 @@ const ComponentCategory = ({
       </Accordion.Header>
       <ResponsiveAccordionContent>
         <Grid paddingTop={4} paddingBottom={4} paddingLeft={3} paddingRight={3}>
-          {components.map(({ uid, displayName, icon }) => (
-            <ComponentBox
-              key={uid}
-              tag="button"
-              type="button"
-              background="neutral100"
-              justifyContent="center"
-              onClick={onAddComponent(uid)}
-              hasRadius
-              height="8.4rem"
-              shrink={0}
-              borderColor="neutral200"
-            >
-              <Flex direction="column" gap={1} alignItems="center" justifyContent="center">
-                <ComponentIcon color="currentColor" background="primary200" icon={icon} />
+          {components.map(({ uid, displayName, icon }) => {
+            const Icon =
+              COMPONENT_ICONS[icon as keyof typeof COMPONENT_ICONS] || COMPONENT_ICONS.dashboard;
 
-                <Typography variant="pi" fontWeight="bold">
-                  {displayName}
-                </Typography>
+            return (
+              <Flex key={uid} direction="column" position={'relative'}>
+                <ComponentBox
+                  tag="button"
+                  type="button"
+                  background="neutral100"
+                  justifyContent="center"
+                  hasRadius
+                  height="200px"
+                  shrink={0}
+                  borderColor="neutral200"
+                >
+                  <Flex
+                    direction="column"
+                    gap={1}
+                    alignItems="center"
+                    justifyContent="space-between"
+                    height={'100%'}
+                    padding={'6px'}
+                  >
+                    <ComponentIcon color="currentColor" background="primary200" icon={icon} />
+
+                    <Flex width={'100%'} height={'60px'} justifyContent={'center'}>
+                      <Typography variant="pi" fontWeight="bold">
+                        {displayName}
+                      </Typography>
+                    </Flex>
+
+                    <Flex gap={1}>
+                      <Button
+                        variant="tertiary"
+                        aria-label="Open icon modal"
+                        size="S"
+                        onClick={() => {
+                          setIsOpen(uid);
+                        }}
+                      >
+                        <Icons.Eye width="16px" height="16px" />
+                      </Button>
+                      <Button
+                        variant="default"
+                        aria-label="Open icon modal"
+                        size="S"
+                        onClick={onAddComponent(uid)}
+                      >
+                        Add
+                      </Button>
+                    </Flex>
+                  </Flex>
+                </ComponentBox>
+
+                <Modal.Root
+                  key={uid}
+                  open={isOpen === uid}
+                  onOpenChange={() => {
+                    setIsOpen(isOpen === uid ? null : uid);
+                  }}
+                >
+                  <Modal.Content>
+                    <Modal.Header>
+                      <Modal.Title>{displayName} component</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Flex width={'100%'} justifyContent={'center'}>
+                        <Box width={'600px'} height={'600px'}>
+                          <Icon height="100%" width="100%" />
+                        </Box>
+                      </Flex>
+                    </Modal.Body>
+                  </Modal.Content>
+                </Modal.Root>
               </Flex>
-            </ComponentBox>
-          ))}
+            );
+          })}
         </Grid>
       </ResponsiveAccordionContent>
     </Accordion.Item>
@@ -94,17 +161,9 @@ const Grid =
 
 const ComponentBox = styled<FlexComponent<'button'>>(Flex)`
   color: ${({ theme }) => theme.colors.neutral600};
-  cursor: pointer;
 
   @media (prefers-reduced-motion: no-preference) {
     transition: color 120ms ${(props) => props.theme.motion.easings.easeOutQuad};
-  }
-
-  &:focus,
-  &:hover {
-    border: 1px solid ${({ theme }) => theme.colors.primary200};
-    background: ${({ theme }) => theme.colors.primary100};
-    color: ${({ theme }) => theme.colors.primary600};
   }
 `;
 

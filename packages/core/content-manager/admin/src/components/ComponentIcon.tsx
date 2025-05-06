@@ -1,7 +1,6 @@
-import * as React from 'react';
-
 import { Flex, FlexProps } from '@strapi/design-system';
 import * as Icons from '@strapi/icons';
+import * as CustomIcons from './icons';
 import * as Symbols from '@strapi/icons/symbols';
 
 import type { Struct } from '@strapi/types';
@@ -23,18 +22,24 @@ const ComponentIcon = ({
       alignItems="center"
       background={showBackground ? 'neutral200' : undefined}
       justifyContent="center"
-      height={8}
-      width={8}
+      height={'120px'}
+      width={'120px'}
       color="neutral600"
-      borderRadius={showBackground ? '50%' : 0}
+      position={'relative'}
       {...props}
     >
-      <Icon height="2rem" width="2rem" />
+      <Icon height="120px" width="120px" />
     </Flex>
   );
 };
 
-const COMPONENT_ICONS: Record<string, React.ComponentType<any>> = {
+type Icon = (typeof Icons)[keyof typeof Icons] | (typeof Symbols)[keyof typeof Symbols];
+
+const CUSTOM_COMPONENT_ICONS: Record<string, Icon> = {
+  cardWhite: CustomIcons.CardWhite,
+};
+
+const COMPONENT_ICONS: Record<string, Icon> = {
   alien: Icons.Alien,
   apps: Icons.GridNine,
   archive: Icons.Archive,
@@ -160,6 +165,7 @@ const COMPONENT_ICONS: Record<string, React.ComponentType<any>> = {
   walk: Icons.Walk,
   wheelchair: Icons.Wheelchair,
   write: Icons.Feather,
+  ...CUSTOM_COMPONENT_ICONS,
 };
 
 export { ComponentIcon, COMPONENT_ICONS };

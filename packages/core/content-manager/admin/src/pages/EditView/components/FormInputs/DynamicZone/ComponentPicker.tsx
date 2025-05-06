@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 
 import { getTranslation } from '../../../../../utils/translations';
 
-import { ComponentCategory, ComponentCategoryProps } from './CustomComponentCategory';
+import { ComponentCategory, ComponentCategoryProps } from './ComponentCategory';
 
 interface ComponentPickerProps {
   dynamicComponentsByCategory?: Record<string, NonNullable<ComponentCategoryProps['components']>>;
