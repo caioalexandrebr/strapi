@@ -1,9 +1,9 @@
 import { Flex, FlexProps } from '@strapi/design-system';
 import * as Icons from '@strapi/icons';
-import * as CustomIcons from './icons';
 import * as Symbols from '@strapi/icons/symbols';
 
 import type { Struct } from '@strapi/types';
+import { CUSTOM_COMPONENT_ICONS } from './icons';
 
 interface ComponentIconProps extends FlexProps {
   showBackground?: boolean;
@@ -34,10 +34,6 @@ const ComponentIcon = ({
 };
 
 type Icon = (typeof Icons)[keyof typeof Icons] | (typeof Symbols)[keyof typeof Symbols];
-
-const CUSTOM_COMPONENT_ICONS: Record<string, Icon> = {
-  placeholder: CustomIcons.Placeholder,
-};
 
 const COMPONENT_ICONS: Record<string, Icon> = {
   alien: Icons.Alien,

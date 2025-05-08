@@ -1,13 +1,8 @@
 import * as Icons from '@strapi/icons';
 import * as Symbols from '@strapi/icons/symbols';
+import { CUSTOM_COMPONENT_ICONS } from './icons';
 
 export type Icon = (typeof Icons)[keyof typeof Icons] | (typeof Symbols)[keyof typeof Symbols];
-
-import * as CustomIcons from './icons';
-
-const CUSTOM_COMPONENT_ICONS: Record<string, Icon> = {
-  placeholder: CustomIcons.Placeholder,
-};
 
 const COMPONENT_ICONS: Record<string, Icon> = {
   alien: Icons.Alien,
