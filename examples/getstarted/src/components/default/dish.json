@@ -3,7 +3,7 @@
   "info": {
     "displayName": "dish",
     "description": "",
-    "icon": "address-book"
+    "icon": "placeholder"
   },
   "attributes": {
     "name": {
@@ -19,6 +19,7 @@
     },
     "picture": {
       "type": "media",
+      "multiple": false,
       "required": false
     },
     "very_long_description": {

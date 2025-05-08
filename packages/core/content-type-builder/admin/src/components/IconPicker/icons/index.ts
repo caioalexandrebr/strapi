@@ -1,1 +1,1 @@
-export { default as CardWhite } from './CardWhite';
+export { default as Placeholder } from './svg/Placeholder';

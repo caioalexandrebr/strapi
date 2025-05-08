@@ -36,7 +36,7 @@ const ComponentIcon = ({
 type Icon = (typeof Icons)[keyof typeof Icons] | (typeof Symbols)[keyof typeof Symbols];
 
 const CUSTOM_COMPONENT_ICONS: Record<string, Icon> = {
-  cardWhite: CustomIcons.CardWhite,
+  placeholder: CustomIcons.Placeholder,
 };
 
 const COMPONENT_ICONS: Record<string, Icon> = {
